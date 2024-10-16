@@ -1,12 +1,14 @@
 <?php
 $success = 0;
 $user = 0;
+$invalid = 0;
 
 //if server connects properly
 if($_SERVER['REQUEST_METHOD']=='POST'){
     include 'connect.php';
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $confirmpassword = $_POST['confirmpassword'];
 
     $sql = "SELECT * FROM `registration` WHERE username = '$username'";
 
@@ -17,15 +19,21 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             // echo "User already exist";
             $user = 1;
         } else {
-            $sql = "INSERT INTO `registration`(username, password) values('$username', '$password')";
-            $result = mysqli_query($con, $sql);
-    
-            if($result){
-                // echo "Data inserted in database successfully"
-                $success = 1;
-                header('location:signin.php');
+            if($password === $confirmpassword){
+                //Hash the password to prepare it for database
+                $hash_password = password_hash($password, PASSWORD_DEFAULT);
+
+                $sql = "INSERT INTO `registration`(username, password) VALUES('$username', '$hash_password')";
+                $result = mysqli_query($con, $sql);
+        
+                if($result){
+                    // echo "Data inserted in database successfully"
+                    $success = 1;
+                    header('location:signin.php');
+                }
             } else {
-                die(mysqli_error($con));
+                // die(mysqli_error($con));
+                $invalid = 1;
             }
         } 
     }
@@ -38,38 +46,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Style for alert because it won't work in external CSS -->
-    <style>
-        .alert {
-            padding: 20px;
-            color: white;
-        }
-
-        .alert.success {
-            background-color: #04AA6D;
-        }
-
-        .alert.danger {
-            background-color: #f44336;
-        }
-
-        .closebtn {
-            margin-left: 15px;
-            color: white;
-            font-weight: bold;
-            float: right;
-            font-size: 22px;
-            line-height: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .closebtn:hover {
-            color: black;
-        }
-    </style>
-
     <link rel="stylesheet" href="styles.css">
     <title>Sign Up Page</title>
 </head>
@@ -84,6 +60,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
             <label for="password">Password</label>
             <input type="password" id="password" name="password">
+
+            <label for="confirmpassword">Confirm Password</label>
+            <input type="password" id="confirmpassword" name="confirmpassword">
 
             <input type="submit" value="Sign Up">
 
@@ -104,6 +83,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                 <div class="alert success">
                     <span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> 
                     <strong>Success!</strong> You are now added!
+                </div>';
+            } ?>
+
+            <!-- If password not match -->
+            <?php
+            if($invalid) {
+                echo '
+                <div class="alert warning">
+                    <span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span> 
+                    <strong>Warning!</strong> Password not match!
                 </div>';
             } ?>
         </form>

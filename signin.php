@@ -31,38 +31,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Style for alert because it won't work in external CSS -->
-    <style>
-        .alert {
-            padding: 20px;
-            color: white;
-        }
-
-        .alert.success {
-            background-color: #04AA6D;
-        }
-
-        .alert.danger {
-            background-color: #f44336;
-        }
-
-        .closebtn {
-            margin-left: 15px;
-            color: white;
-            font-weight: bold;
-            float: right;
-            font-size: 22px;
-            line-height: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .closebtn:hover {
-            color: black;
-        }
-    </style>
-
     <link rel="stylesheet" href="styles.css">
     <title>Sign in Page</title>
 </head>
