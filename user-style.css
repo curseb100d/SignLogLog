@@ -1,0 +1,56 @@
+body {
+    font-family:Arial, Helvetica, sans-serif;
+}
+  
+* {
+    box-sizing: border-box;
+}
+  
+  /* For forms container */
+.container {
+    padding: 16px; /* size inside */
+}
+  
+input[type=text], input[type=password], input[type=email] {
+    width: 100%; /* width on the right side */
+    padding: 15px; /* size on the inside */
+    margin: 5px 0 22px 0; /* size for outside bottom, left-side, */
+    display: inline-block; /*to make it center*/
+    border: none; /* no border for inputs */
+    background: #f1f1f1; /* background color for inside input */
+}
+  
+button {
+    background-color: #04AA6D;
+    color: white; /* color for text */
+    padding: 16px 20px; /* size on the inside */
+    margin: 8px 0; /* size for the outside left */
+    border: none;
+    cursor: pointer; /* change to pointer */
+    width: 100%; /* change width to the right */
+    opacity: 0.9;
+}
+  
+button:hover {
+    opacity: 0.8;
+}
+
+/* For Table */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+th {
+    background-color: #04AA6D;
+    color: white;
+}
